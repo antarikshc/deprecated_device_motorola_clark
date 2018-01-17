@@ -272,10 +272,12 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.1-service \
     android.hardware.keymaster@3.0-impl \
     android.hardware.keymaster@3.0-service \
+    keystore.msm8992.so \
     android.hardware.vibrator@1.0-impl.lineage \
     android.hardware.sensors@1.0-impl \
     android.hardware.sensors@1.0-service \
     android.hardware.gatekeeper@1.0-impl \
+    gatekeeper.msm8992.so \
     android.hardware.power@1.0-impl \
     android.hardware.power@1.0-service \
     android.hardware.thermal@1.0-impl \
