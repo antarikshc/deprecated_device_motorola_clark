@@ -43,6 +43,7 @@ ro.bluetooth.emb_wp_mode=true
 ro.qualcomm.cabl=0
 
 # Camera
+camera.aux.packagelist=org.codeaurora.snapcam,org.cyanogenmod.snap
 persist.camera.HAL3.enabled=0
 persist.camera.tnr.video=on
 persist.camera.tnr.preview=on
