@@ -71,6 +71,7 @@ on boot
     write /dev/cpuset/background/cpus 0-1
     write /dev/cpuset/system-background/cpus 0-2
     write /dev/cpuset/top-app/cpus 0-5
+    write /dev/cpuset/camera-daemon/cpus 0-3
 
     # motosh irq_disable parameter permissions
     chown root mot_tcmd /sys/module/motosh/parameters/irq_disable
@@ -458,7 +459,7 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
-    writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/camera-daemon/tasks
 
 service qseecomd /system/bin/qseecomd
     class core
