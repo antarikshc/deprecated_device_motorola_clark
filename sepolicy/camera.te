@@ -1,0 +1,28 @@
+type camera, domain, domain_deprecated;
+type camera_exec, exec_type, file_type;
+
+# Started by init
+init_daemon_domain(camera)
+
+binder_use(camera)
+binder_call(camera, system_server)
+
+allow camera system_server:unix_stream_socket { read write };
+allow camera system_server:binder { call };
+allow camera cameraserver:fd { use };
+
+allow camera property_socket:sock_file write;
+allow camera video_device:chr_file { ioctl write };
+allow camera ion_device:chr_file { ioctl write };
+allow camera device:chr_file { read write open };
+allow camera device:chr_file { ioctl };
+allow camera servicemanager:binder { call };
+allow camera hal_graphics_allocator_default:fd { use };
+
+allow camera camera_prop:property_service set;
+allow camera init:unix_stream_socket connectto;
+allow camera persist_file:dir { getattr open read search  };
+allow camera persist_file:file { read open getattr };
+
+allow camera { cameraserver surfaceflinger }:fd use;
+
