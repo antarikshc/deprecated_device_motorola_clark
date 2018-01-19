@@ -35,11 +35,15 @@ bluetooth.hfp.client=1
 qcom.bluetooth.soc=rome
 qcom.bt.le_dev_pwr_class=1
 ro.bluetooth.hfp.ver=1.6
+#Set this true as ROME which is programmed
+#as embedded wipower mode by deafult
+ro.bluetooth.emb_wp_mode=true
 
 # CABL
 ro.qualcomm.cabl=0
 
 # Camera
+camera.aux.packagelist=org.codeaurora.snapcam,org.cyanogenmod.snap
 persist.camera.HAL3.enabled=0
 persist.camera.tnr.video=on
 persist.camera.tnr.preview=on
@@ -174,6 +178,9 @@ ro.usb.mtp=0x2e82
 ro.usb.mtp_adb=0x2e76
 ro.usb.ptp=0x2e83
 ro.usb.ptp_adb=0x2e84
+
+# Create zram disk
+ro.config.zram=true
 
 # Wifi Display
 persist.debug.wfd.enable=1
