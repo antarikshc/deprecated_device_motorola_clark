@@ -83,6 +83,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 TARGET_FS_CONFIG_GEN += \
     $(DEVICE_PATH)/fs_config/file_caps.fs \
+    $(DEVICE_PATH)/fs_config/qcom_aids.fs \
     $(DEVICE_PATH)/fs_config/mot_aids.fs
 
 # Fonts
