@@ -78,8 +78,8 @@ void vendor_load_properties()
         if (car == "retin") {
             /* India */
             setMsim();
-            property_override("ro.build.description", "clark_retasia_ds-user 6.0 MPH24.49-18 18 release-keys");
-            property_override("ro.build.fingerprint", "motorola/clark_retasia_ds/clark_ds:6.0/MPH24.49-18/18:user/release-keys");
+            property_override("ro.build.description", "clark_retasia_ds-user 7.0 NPHS25.200-15-3 3 release-keys");
+            property_override("ro.build.fingerprint", "motorola/clark_retasia_ds/clark_ds:7.0/NPHS25.200-15-3/3:user/release-keys");
         }
         else if (car == "retbr") {
             /* Brazil */
