@@ -36,4 +36,3 @@
 /system/bin/motosh                              u:object_r:sensors_exec:s0
 /system/bin/thermanager                         u:object_r:thermanager_exec:s0
 /system/bin/mm-qcamera-daemon			u:object_r:camera_exec:s0
-
