@@ -272,6 +272,7 @@ PRODUCT_PACKAGES += \
     keystore.msm8992.so \
     android.hardware.vibrator@1.0-impl.lineage \
     android.hardware.sensors@1.0-impl \
+    android.hardware.contexthub@1.0-impl \
     android.hardware.gatekeeper@1.0-impl \
     gatekeeper.msm8992.so \
     android.hardware.power@1.0-impl \
