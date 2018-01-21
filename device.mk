@@ -50,7 +50,6 @@ PRODUCT_PACKAGES += \
 # Bluetooth HAL
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-impl \
-    android.hardware.bluetooth@1.0-service \
     libbt-vendor
 
 # Camera
@@ -160,7 +159,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     android.hardware.nfc@1.0-impl-bcm \
-    android.hardware.nfc@1.0-service \
     com.android.nfc_extras \
     nfc_nci.bcm2079x.default \
     NfcNci \
@@ -263,29 +261,22 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service \
     android.hardware.renderscript@1.0-impl \
     android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service \
     android.hardware.audio@2.0-impl \
     android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
     android.hardware.soundtrigger@2.0-impl \
     android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.composer@2.1-service \
     android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service \
     keystore.msm8992.so \
     android.hardware.vibrator@1.0-impl.lineage \
     android.hardware.sensors@1.0-impl \
-    android.hardware.sensors@1.0-service \
     android.hardware.gatekeeper@1.0-impl \
     gatekeeper.msm8992.so \
     android.hardware.power@1.0-impl \
-    android.hardware.power@1.0-service \
     android.hardware.thermal@1.0-impl \
     android.hardware.gnss@1.0-impl \
-    android.hardware.gnss@1.0-service \
     android.hardware.usb@1.0-service
 
 PRODUCT_COPY_FILES += \
