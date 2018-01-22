@@ -155,10 +155,10 @@ TARGET_RIL_VARIANT := caf
 TARGET_USE_SDCLANG := true
 
 # SELinux
-include device/qcom/sepolicy/sepolicy.mk
+#include device/qcom/sepolicy/sepolicy.mk
 
-BOARD_SEPOLICY_DIRS += \
-    $(DEVICE_PATH)/sepolicy
+#BOARD_SEPOLICY_DIRS += \
+#    $(DEVICE_PATH)/sepolicy
 
 # TWRP Support - Optional
 ifeq ($(WITH_TWRP),true)
