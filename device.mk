@@ -293,6 +293,7 @@ PRODUCT_PACKAGES += \
     android.hardware.power@1.0-impl \
     android.hardware.power@1.0-service \
     android.hardware.thermal@1.0-impl \
+    android.hardware.thermal@1.0-service \
     android.hardware.gnss@1.0-impl \
     android.hardware.gnss@1.0-service \
     android.hardware.usb@1.0-service
