@@ -124,6 +124,7 @@ PRODUCT_PACKAGES += \
     init.mmi.usb.rc \
     init.qcom.power.rc \
     init.qcom.power.sh \
+    init.qcom.sensor.sh \
     init.qcom.rc \
     ueventd.qcom.rc
 
