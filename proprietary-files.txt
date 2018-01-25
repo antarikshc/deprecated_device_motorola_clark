@@ -101,7 +101,7 @@ vendor/lib/libbt-vendor.so
 vendor/lib64/libbt-vendor.so
 
 bin/cnss-daemon
-bin/cnss-diag
+bin/cnss_diag
 
 # Camera
 bin/mm-qcamera-app
