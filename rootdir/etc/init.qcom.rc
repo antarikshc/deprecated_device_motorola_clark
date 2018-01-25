@@ -707,6 +707,15 @@ on property:cnss_diag.load=false
 service cnss-daemon /system/bin/cnss-daemon -n -l
     class late_start
 
+service qcom-post-boot /system/bin/init.qcom.post_boot.sh
+    class late_start
+    user root
+    disabled
+    oneshot
+
+on property:sys.boot_completed=1
+    start qcom-post-boot
+
 # OSS thermal management
 service thermanager /system/bin/thermanager /system/etc/thermanager.xml
     class late_start
