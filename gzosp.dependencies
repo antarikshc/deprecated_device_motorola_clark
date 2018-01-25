@@ -9,7 +9,7 @@
     "remote":      "github",
     "repository":  "LineageOS/android_hardware_sony_thermanager",
     "target_path": "hardware/sony/thermanager",
-    "branch":      "lineage-15.0"
+    "branch":      "staging/lineage-15.1"
   },
   {
     "remote":      "github",
@@ -21,6 +21,6 @@
     "remote":      "github",
     "repository":  "antarikshc/proprietary_vendor_motorola",
     "target_path": "vendor/motorola",
-    "branch":      "lineage-15.1"
+    "branch":      "lineage-15.1_rebase"
   }
 ]
