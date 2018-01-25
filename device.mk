@@ -125,6 +125,7 @@ PRODUCT_PACKAGES += \
     init.qcom.power.rc \
     init.qcom.power.sh \
     init.qcom.sensor.sh \
+    init.qcom.post_boot.sh \
     init.qcom.rc \
     ueventd.qcom.rc
 
