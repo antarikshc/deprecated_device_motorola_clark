@@ -81,6 +81,7 @@ bin/hci_qcomm_init
 bin/wcnss_filter
 bin/dun-server
 bin/btsnoop
+bin/bt_logger
 bin/logwrapper
 bin/ftmdaemon
 etc/user_bhd_psy.conf
