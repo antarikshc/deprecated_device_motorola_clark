@@ -79,6 +79,10 @@ etc/firmware/vrgain.bin
 bin/btnvtool
 bin/hci_qcomm_init
 bin/wcnss_filter
+bin/dun-server
+bin/btsnoop
+bin/logwrapper
+bin/ftmdaemon
 etc/user_bhd_psy.conf
 etc/firmware/nvm_tlv.bin
 etc/firmware/nvm_tlv_1.3.bin
@@ -95,7 +99,11 @@ vendor/lib64/libbtnv.so
 vendor/lib/libbt-vendor.so
 vendor/lib64/libbt-vendor.so
 
+bin/cnss-daemon
+bin/cnss-diag
+
 # Camera
+bin/mm-qcamera-app
 bin/mm-qcamera-daemon
 etc/firmware/cpp_firmware_v1_1_1.fw
 etc/firmware/cpp_firmware_v1_1_6.fw
@@ -519,6 +527,17 @@ vendor/lib/libvendorconn.so
 vendor/lib64/libvendorconn.so
 vendor/lib/libwqe.so
 vendor/lib64/libwqe.so
+
+# Postprocessing
+bin/mm-pp-daemon
+vendor/lib/libdisp-aba.so
+vendor/lib/libmm-abl-oem.so
+vendor/lib/libmm-als.so
+vendor/lib/libmm-qdcm.so
+vendor/lib64/libdisp-aba.so
+vendor/lib64/libmm-abl-oem.so
+vendor/lib64/libmm-als.so
+vendor/lib64/libmm-qdcm.so
 
 # Radio
 -app/MotoSignatureApp/MotoSignatureApp.apk:app/MotoSignatureApp/MotoSignatureApp.apk:PRESIGNED
