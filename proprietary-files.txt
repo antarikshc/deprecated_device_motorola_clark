@@ -623,7 +623,7 @@ etc/firmware/synaptics-s3528ar-15071401-1e29b4-clark.tdat
 # Sensors
 bin/motosh
 etc/firmware/sensorhubfw.bin
-lib/hw/sensors.msm8992.so
+lib/hw/sensors.msm8992.so:lib/sensors.vendor.msm8992.so
 lib64/hw/sensors.msm8992.so
 vendor/lib/libsubsystem_control.so
 vendor/lib64/libsubsystem_control.so
