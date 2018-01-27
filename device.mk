@@ -56,17 +56,11 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
-    android.hardware.camera.provider@2.4-service \
     vendor.qti.hardware.camera.device@1.0 \
     vendor.qti.hardware.camera.device@1.0_vendor \
-    camera.device@1.0-impl \
-    libcamera \
-    libqomx_core \
+    camera.device@3.2-impl \
+    camera.msm8992 \
     libmm-qcamera \
-    libmmcamera_interface \
-    libmmjpeg_interface \
-    libshims_camera \
-    mm-qcamera-app \
     Snap
 
 PRODUCT_COPY_FILES += \
