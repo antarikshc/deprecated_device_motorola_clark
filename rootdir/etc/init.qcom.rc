@@ -13,7 +13,7 @@ on early-init
     mkdir /fsg 755 root root
 
     # Setup symlinks
-    symlink /data/tombstones /tombstones
+    symlink /data/vendor/tombstones /tombstones
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
@@ -57,7 +57,7 @@ on fs
     # use /persist as phony PDS partition
     symlink /persist /pds
 
-    symlink /data/tombstones /tombstones
+    symlink /data/vendor/tombstones /tombstones
 
     restorecon_recursive /persist
 
@@ -181,25 +181,25 @@ on boot
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
 
     # Mark the copy complete flag to not completed
-    mkdir /data/misc/radio 0770 radio radio
-    write /data/misc/radio/copy_complete 0
-    chown radio radio /data/misc/radio/copy_complete
-    chmod 0660 /data/misc/radio/copy_complete
-    symlink /firmware/image/modem_pr/mbn_ota /data/misc/radio/modem_config
-    write /data/misc/radio/copy_complete 1
+    mkdir /data/vendor/radio 0770 radio radio
+    write /data/vendor/radio/copy_complete 0
+    chown radio radio /data/vendor/radio/copy_complete
+    chmod 0660 /data/vendor/radio/copy_complete
+    symlink /firmware/image/modem_pr/mbn_ota /data/vendor/radio/modem_config
+    write /data/vendor/radio/copy_complete 1
 
     # use qcril.db to handle Ecc and load MBN
-    copy /system/vendor/qcril.db /data/misc/radio/qcril.db
-    chown radio radio /data/misc/radio/qcril.db
-    chmod 0600 /data/misc/radio/qcril.db
+    copy /system/vendor/qcril.db /data/vendor/radio/qcril.db
+    chown radio radio /data/vendor/radio/qcril.db
+    chmod 0600 /data/vendor/radio/qcril.db
 
     # File flags for prebuilt ril db file
-    write /data/misc/radio/prebuilt_db_support 1
-    chown radio radio /data/misc/radio/prebuilt_db_support
-    chmod 0400 /data/misc/radio/prebuilt_db_support
-    write /data/misc/radio/db_check_done 0
-    chown radio radio /data/misc/radio/db_check_done
-    chmod 0660 /data/misc/radio/db_check_done
+    write /data/vendor/radio/prebuilt_db_support 1
+    chown radio radio /data/vendor/radio/prebuilt_db_support
+    chmod 0400 /data/vendor/radio/prebuilt_db_support
+    write /data/vendor/radio/db_check_done 0
+    chown radio radio /data/vendor/radio/db_check_done
+    chmod 0660 /data/vendor/radio/db_check_done
 
 on post-fs
     mkdir /persist/camera 02755 oem_5004 oem_5004
@@ -250,26 +250,33 @@ on post-fs
     chmod 0660 /sys/class/capsense/reset
 
 on post-fs-data
+    # Create directory used by display clients
+    mkdir /data/vendor/display 0770 system graphics
+
+    # Create directory used by media clients
+    mkdir /data/vendor/media 0770 mediacodec media
+
     # Setup correct permissions for dbvc and atvc
     mkdir /pds/public/atvc 0770 oem_5012 shell
     chmod 0770 /pds/public/atvc
     mkdir /data/local/atvc 0775 oem_5004 shell
 
     # Create IPA daemon dir
-    mkdir /data/misc/ipa/ 0770 system net_admin
+    mkdir /data/vendor/ipa 0770 radio radio
+    chmod 0770 /data/vendor/ipa
 
     # Create IOP daemon dir
-    mkdir /data/misc/iop 0770 root system
+    mkdir /data/vendor/iop 0770 root system
 
     # Create PERFD deamon related dirs
-    mkdir /data/system/perfd 0770 root system
-    chmod 2770 /data/system/perfd
-    rm /data/system/perfd/default_values 
-    mkdir /data/misc/perfd 0755 root system
-    chmod 2755 /data/misc/perfd
-    rm /data/misc/perfd/default_values
+    mkdir /data/vendor/perfd 0770 root system
+    chmod 2770 /data/vendor/perfd
+    rm /data/vendor/perfd/default_values 
+    mkdir /data/vendor/perfd 0755 root system
+    chmod 2755 /data/vendor/perfd
+    rm /data/vendor/perfd/default_values
 
-    mkdir /data/tombstones 0771 system system
+    mkdir /data/vendor/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
     mkdir /tombstones/lpass 0771 system system
     mkdir /tombstones/wcnss 0771 system system
@@ -299,23 +306,26 @@ on post-fs-data
     mkdir /data/misc/audio 0770 audio audio
     mkdir /data/misc/audio/acdbdata 0770 media audio
     mkdir /data/misc/audio/acdbdata/delta 0770 media audio
-    mkdir /data/misc/location 0770 gps gps
-    mkdir /data/misc/location/mq 0770 gps gps
-    mkdir /data/misc/location/xtwifi 0770 gps gps
-    mkdir /data/misc/location/gpsone_d 0770 system gps
-    mkdir /data/misc/location/quipc 0770 gps system
-    mkdir /data/misc/location/gsiff 0770 gps gps
+    mkdir /data/vendor/location 0770 gps gps
+    mkdir /data/vendor/location/mq 0770 gps gps
+    mkdir /data/vendor/location/xtwifi 0770 gps gps
+    mkdir /data/vendor/location/gpsone_d 0770 system gps
+    mkdir /data/vendor/location/quipc 0770 gps system
+    mkdir /data/vendor/location/gsiff 0770 gps gps
     mkdir /data/misc/camera 0770 camera camera
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
-    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+    mkdir /data/vendor/bluetooth 0770 bluetooth bluetooth
     # Create folder for mm-qcamera-daemon
     mkdir /data/camera 0770 media camera
     # Setup folder for camera HAL subsystem
     mkdir /data/camera_dump 0750 media media
+
+    mkdir /data/vendor/ramdump 0771 root system
+    mkdir /data/vendor/ramdump/bluetooth 0770 bluetooth bluetooth
 
     # Create directory's for various items
     mkdir /data/power_supply_logger 0750 oem_5001 log
@@ -345,25 +355,26 @@ on post-fs-data
     setprop vold.post_fs_data_done 1
 
 
-service irsc_util /system/bin/irsc_util "/etc/sec_config"
+service irsc_util /system/vendor/bin/irsc_util "/vendor/etc/sec_config"
     class main
     user root
     oneshot
 
-service rmt_storage /system/bin/rmt_storage
+service rmt_storage /system/vendor/bin/rmt_storage
     class core
     user root
-    shutdown critical
     group system wakelock
+    shutdown critical
+    ioprio rt 0
     writepid /dev/cpuset/system-background/tasks
 
-service rfs_access /system/bin/rfs_access
+service rfs_access /system/vendor/bin/rfs_access
     class core
     user root
     group system net_raw
     writepid /dev/cpuset/system-background/tasks
 
-service start_hci_filter /system/bin/wcnss_filter
+service start_hci_filter /system/vendor/bin/wcnss_filter
     class late_start
     user bluetooth
     group bluetooth system
@@ -375,7 +386,7 @@ on property:wc_transport.start_hci=true
 on property:wc_transport.start_hci=false
     stop start_hci_filter
 
-service hci_filter_root /system/bin/wcnss_filter
+service hci_filter_root /system/vendor/bin/wcnss_filter
     class late_start
     user bluetooth
     group bluetooth oem_2950 diag system
@@ -405,7 +416,7 @@ on property:bluetooth.hciattach=true
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off
 
-service bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
+service bt-dun /system/vendor/bin/dun-server /dev/smd7 /dev/rfcomm0
     class late_start
     user bluetooth
     group bluetooth net_bt_admin inet
@@ -418,7 +429,7 @@ on property:bluetooth.dun.status=running
 on property:bluetooth.dun.status=stopped
     stop bt-dun
 
-service btsnoop /system/bin/btsnoop
+service btsnoop /system/vendor/bin/btsnoop
     user bluetooth
     group bluetooth net_bt_admin sdcard_rw sdcard_r
     class late_start
@@ -432,7 +443,7 @@ on property:bluetooth.startbtsnoop=false
     stop btsnoop
 
 
-service bt_logger /system/bin/bt_logger
+service bt_logger /system/vendor/bin/bt_logger
    user bluetooth
    group bluetooth net_bt_admin sdcard_rw sdcard_r media_rw
    class late_start
@@ -445,7 +456,7 @@ on property:bluetooth.startbtlogger=true
 on property:bluetooth.startbtlogger=false
     stop bt_logger
 
-service ftmd /system/bin/logwrapper /system/bin/ftmdaemon
+service ftmd /system/vendor/bin/logwrapper /system/vendor/bin/ftmdaemon
     class late_start
     user root
     group bluetooth net_bt_admin misc net_bt_stack diag net_bt
@@ -455,41 +466,41 @@ service ftmd /system/bin/logwrapper /system/bin/ftmdaemon
 on property:ro.bluetooth.ftm_enabled=true
     start ftmd
 
-service ftm_ffbm /system/bin/ftmdaemon
+service ftm_ffbm /system/vendor/bin/ftmdaemon
     user root
     group root
     disabled
     oneshot
 
-service loc_launcher /system/bin/loc_launcher
+service loc_launcher /system/vendor/bin/loc_launcher
     class late_start
     group gps inet net_raw oem_2950 net_admin wifi
     writepid /dev/cpuset/system-background/tasks
 
-service qmuxd /system/bin/qmuxd
+service qmuxd /system/vendor/bin/qmuxd
     class main
     user root
     group radio audio bluetooth gps nfc diag wakelock
     writepid /dev/cpuset/system-background/tasks
 
-service netmgrd /system/bin/netmgrd
+service netmgrd /system/vendor/bin/netmgrd
     class main
     group root wifi wakelock radio inet system
     writepid /dev/cpuset/system-background/tasks
 
-service ipacm-diag /system/bin/ipacm-diag
+service ipacm-diag /system/vendor/bin/ipacm-diag
     class main
     user system
     socket ipacm_log_file dgram 660 system net_admin
     group net_admin diag
 
-service ipacm /system/bin/ipacm
+service ipacm /system/vendor/bin/ipacm
     class main
     user net_admin
     group net_admin inet
     writepid /dev/cpuset/system-background/tasks
 
-service qti /system/vendor/bin/qti
+service qti /system/vendor/vendor/bin/qti
     class main
     user radio
     group radio net_raw diag usb net_admin
@@ -498,9 +509,9 @@ service qti /system/vendor/bin/qti
 
 service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
-    -I/system/etc/wifi/p2p_supplicant_overlay.conf -N \
+    -I/system/vendor/etc/wifi/p2p_supplicant_overlay.conf -N \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
-    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
+    -I/system/vendor/etc/wifi/wpa_supplicant_overlay.conf \
     -O/data/misc/wifi/sockets -puse_p2p_group_interface=1 \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
     # we will start as root and wpa_supplicant will switch to user wifi
@@ -512,19 +523,19 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-service gpsone_daemon /system/bin/gpsone_daemon
+service gpsone_daemon /system/vendor/bin/gpsone_daemon
     class late_start
     user gps
     group gps inet net_raw
     disabled
 
-service location_mq /system/bin/location-mq
+service location_mq /system/vendor/bin/location-mq
     class late_start
     user gps
     group gps
     disabled
 
-service atfwd /system/bin/ATFWD-daemon
+service atfwd /system/vendor/bin/ATFWD-daemon
     class late_start
     user system
     group system radio
@@ -543,13 +554,13 @@ service ril-daemon2 /vendor/bin/hw/rild -c 2
     group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2950 log
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
-service qcamerasvr /system/bin/mm-qcamera-daemon
+service qcamerasvr /system/vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
     writepid /dev/cpuset/system-background/tasks
 
-service ppd /system/bin/mm-pp-daemon
+service ppd /system/vendor/bin/mm-pp-daemon
     class late_start
     disabled
     user system
@@ -562,19 +573,19 @@ on property:init.svc.surfaceflinger=stopped
 on property:init.svc.surfaceflinger=running
     start ppd
 
-service qseecomd /system/bin/qseecomd
+service qseecomd /system/vendor/bin/qseecomd
     class core
     user root
     group root
     writepid /dev/cpuset/system-background/tasks
 
-service per_mgr /system/bin/pm-service
+service per_mgr /system/vendor/bin/pm-service
     class core
     user system
     group system net_raw
     writepid /dev/cpuset/system-background/tasks
 
-service per_proxy /system/bin/pm-proxy
+service per_proxy /system/vendor/bin/pm-proxy
     class core
     user system
     group system net_raw
@@ -587,7 +598,7 @@ on property:init.svc.per_mgr=running
 on property:sys.shutdown.requested=*
     stop per_proxy
 
-service time_daemon /system/bin/time_daemon
+service time_daemon /system/vendor/bin/time_daemon
     class main
     user root
     group root
@@ -598,34 +609,34 @@ service adsprpcd /system/bin/adsprpcd
     user media
     group media
 
-service atvc_core /system/bin/dbvc_atvc_property_set
+service atvc_core /system/vendor/bin/dbvc_atvc_property_set
     class core
     user oem_5012
     seclabel u:r:atvc:s0
     group oem_5012
     oneshot
 
-service atvc /system/bin/dbvc_atvc_property_set
+service atvc /system/vendor/bin/dbvc_atvc_property_set
     class late_start
     user oem_5012
     seclabel u:r:atvc:s0
     group oem_5012
     oneshot
 
-service msm_irqbalance /system/bin/msm_irqbalance -f /system/etc/msm_irqbalance.conf
+service msm_irqbalance /system/vendor/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
     socket msm_irqbalance seqpacket 660 root system
     class core
     user root
     group root
     writepid /dev/cpuset/system-background/tasks
 
-service cnd /system/bin/cnd
+service cnd /system/vendor/bin/cnd
     class main
-    socket cnd stream 660 root inet
-    group root wakelock
+    user system
+    group system wifi inet radio wakelock net_admin
     writepid /dev/cpuset/system-background/tasks
 
-service ssr_setup /system/bin/ssr_setup
+service ssr_setup /system/vendor/bin/ssr_setup
     class late_start
     oneshot
 
@@ -635,7 +646,7 @@ service charger /charger
     seclabel u:r:healthd:s0
     writepid /dev/cpuset/system-background/tasks
 
-service motosh /system/bin/motosh boot
+service motosh /system/vendor/bin/motosh boot
     class late_start
     user compass
     group compass misc input oem_5004
@@ -651,13 +662,13 @@ service mmi-touch-sh /system/bin/sh /init.mmi.touch.sh synaptics
     user root
     oneshot
 
-service hw_revs /system/bin/hardware_revisions.sh
+service hw_revs /system/vendor/bin/hardware_revisions.sh
     class late_start
     user system
     group system
     oneshot
 
-service adspd /system/bin/adspd
+service adspd /system/vendor/bin/adspd
    class main
    socket adspdsock stream 0660 system audio
    user audio
@@ -670,7 +681,7 @@ service perfd /system/vendor/bin/perfd
     socket perfd seqpacket 0666 root system
     writepid /dev/cpuset/system-background/tasks
 
-service iop /system/bin/iop
+service iop /system/vendor/bin/iop
     class main
     user root
     group root
@@ -683,7 +694,7 @@ on property:vold.decrypt=trigger_restart_framework
 on property:bluetooth.isEnabled=true
     write /sys/class/bluetooth/hci0/idle_timeout 7000
 
-service cnss_diag /system/bin/cnss_diag -q -f
+service cnss_diag /system/vendor/bin/cnss_diag -q -f
     class main
     user root
     group root
@@ -695,7 +706,7 @@ on property:cnss_diag.load=true
 on property:cnss_diag.load=false
     stop cnss_diag
 
-service cnss-daemon /system/bin/cnss-daemon -n -l
+service cnss-daemon /system/vendor/bin/cnss-daemon -n -l
     class late_start
 
 service qcom-post-boot /system/bin/init.qcom.post_boot.sh
@@ -708,19 +719,19 @@ on property:sys.boot_completed=1
     start qcom-post-boot
 
 # OSS thermal management
-service thermanager /system/bin/thermanager /system/etc/thermanager.xml
+service thermanager /system/vendor/bin/thermanager /system/vendor/etc/thermanager.xml
     class late_start
     user root
     group root
     writepid /dev/cpuset/system-background/tasks
 
-service imsqmidaemon /system/bin/imsqmidaemon
+service imsqmidaemon /system/vendor/bin/imsqmidaemon
     class main
     user system
     socket ims_qmid stream 0660 system radio
     group radio log diag net_raw
 
-service imsdatadaemon /system/bin/imsdatadaemon
+service imsdatadaemon /system/vendor/bin/imsdatadaemon
     class main
     user system
     socket ims_datad stream 0660 system radio
@@ -730,7 +741,7 @@ service imsdatadaemon /system/bin/imsdatadaemon
 on property:sys.ims.QMI_DAEMON_STATUS=1
     start imsdatadaemon
 
-service ims_rtp_daemon /system/bin/ims_rtp_daemon
+service ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
    class main
    user system
    socket ims_rtpd stream 0660 system radio
@@ -740,7 +751,7 @@ service ims_rtp_daemon /system/bin/ims_rtp_daemon
 on property:sys.ims.DATA_DAEMON_STATUS=1
     start ims_rtp_daemon
 
-service imscmservice /system/bin/imscmservice
+service imscmservice /system/vendor/bin/imscmservice
    class main
    user system
    group radio diag inet log

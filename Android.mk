@@ -30,14 +30,14 @@ include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
 
-PERSIST_WCNSS := $(TARGET_OUT_ETC)/firmware/wlan/qca_cld/WCNSS_qcom_wlan_nv.bin
+PERSIST_WCNSS := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_wlan_nv.bin
 $(PERSIST_WCNSS): $(LOCAL_INSTALLED_MODULE)
 	@echo "WCNSS_qcom_wlan_factory_nv.bin Firmware link: $@"
 	@mkdir -p $(dir $@)
 	@rm -rf $@
 	$(hide) ln -sf /persist/$(notdir $@) $@
 
-WCNSS_CFG_INI := $(TARGET_OUT_ETC)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
+WCNSS_CFG_INI := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
 $(WCNSS_CFG_INI): $(LOCAL_INSTALLED_MODULE)
 	@echo "WCNSS_qcom_cfg.ini Firmware link: $@"
 	@mkdir -p $(dir $@)
