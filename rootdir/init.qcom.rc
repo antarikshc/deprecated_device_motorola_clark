@@ -70,6 +70,15 @@ on boot
     write /dev/cpuset/system-background/cpus 0-2
     write /dev/cpuset/top-app/cpus 0-5
 
+    # add a cpuset for the camera daemon
+    # we want all the little cores for camera
+    mkdir /dev/cpuset/camera-daemon
+    write /dev/cpuset/camera-daemon/cpus 0-3
+    write /dev/cpuset/camera-daemon/mems 0
+    chown system system /dev/cpuset/camera-daemon
+    chown system system /dev/cpuset/camera-daemon/tasks
+    chmod 0664 /dev/cpuset/camera-daemon/tasks
+
     # motosh irq_disable parameter permissions
     chown root mot_tcmd /sys/module/motosh/parameters/irq_disable
     chmod 0660 /sys/module/motosh/parameters/irq_disable
@@ -144,11 +153,17 @@ on boot
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
 
     # Mark the copy complete flag to not completed
+    mkdir /data/misc/radio 0770 radio radio
     write /data/misc/radio/copy_complete 0
     chown radio radio /data/misc/radio/copy_complete
     chmod 0660 /data/misc/radio/copy_complete
     symlink /firmware/image/modem_pr/mbn_ota /data/misc/radio/modem_config
     write /data/misc/radio/copy_complete 1
+
+    # use qcril.db to handle Ecc and load MBN
+    copy /system/etc/qcril.db /data/misc/radio/qcril.db
+    chown radio radio /data/misc/radio/qcril.db
+    chmod 0600 /data/misc/radio/qcril.db
 
     # File flags for prebuilt ril db file
     write /data/misc/radio/prebuilt_db_support 1
@@ -451,6 +466,7 @@ service ril-daemon2 /system/bin/rild -c 2
     socket rild2 stream 660 root radio
     socket rild-debug2 stream 660 radio system
     user root
+    disabled
     group radio cache inet misc audio sdcard_r sdcard_rw diag qcom_diag log wakelock
     writepid /dev/cpuset/system-background/tasks
 
@@ -462,10 +478,16 @@ service ril-daemon3 /system/bin/rild -c 3
     disabled
     group radio cache inet misc audio sdcard_r sdcard_rw diag qcom_diag log
 
-service rild2-wrapper /system/bin/sh /system/etc/init.qcom.ril.sh
+service rild2-wrapper /system/bin/sh /system/bin/init.qcom.ril.sh
     class late_start
     user root
     group root
+    oneshot
+
+service modem-config /system/bin/sh /system/bin/init.modem.sh
+    class late_start
+    user radio
+    group system
     oneshot
 
 service qcamerasvr /system/bin/mm-qcamera-daemon
@@ -534,10 +556,6 @@ service cnd /system/bin/cnd
 service ssr_setup /system/bin/ssr_setup
     class late_start
     oneshot
-
-service batt_health /system/bin/batt_health
-    class main
-    group mot_pwric
 
 service charger /charger
     class charger

@@ -109,6 +109,8 @@ PRODUCT_PACKAGES += \
     init.mmi.usb.rc \
     init.qcom.power.rc \
     init.qcom.power.sh \
+    init.qcom.ril.sh \
+    init.modem.sh \
     init.qcom.rc \
     ueventd.qcom.rc
 
