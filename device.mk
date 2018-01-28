@@ -45,7 +45,11 @@ PRODUCT_PACKAGES += \
     libtinyalsa \
     libtinycompress \
     libtinyxml \
-    tinymix
+    tinymix \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio@2.0-service \
+    android.hardware.audio.effect@2.0-impl \
+    android.hardware.soundtrigger@2.0-impl
 
 # Bluetooth HAL
 PRODUCT_PACKAGES += \
@@ -94,9 +98,20 @@ PRODUCT_PACKAGES += \
     libqdutils \
     libqdMetaData
 
+#DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.0-service
+
 # Firmware extraction script
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/releasetools/extract_firmware.sh:install/bin/extract_firmware.sh
+
+#Gatekeeping
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0-impl \
+    android.hardware.gatekeeper@1.0-service \
+    gatekeeper.msm8992.so
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -108,13 +123,27 @@ PRODUCT_PACKAGES += \
     lowi.conf \
     quipc.conf \
     sap.conf \
-    xtwifi.conf
+    xtwifi.conf \
+    android.hardware.gnss@1.0-impl \
+    android.hardware.gnss@1.0-service
+
+#Graphics
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.renderscript@1.0-impl \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.composer@2.1-service
 
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
     android.hidl.manager@1.0 \
     android.hidl.manager@1.0-java
+
+PRODUCT_COPY_FILES += \
+    device/motorola/clark/configs/manifest.xml:system/vendor/manifest.xml
 
 # Init
 PRODUCT_PACKAGES += \
@@ -142,6 +171,11 @@ PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
 
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service \
+    keystore.msm8992.so
+
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.clark
@@ -160,6 +194,10 @@ PRODUCT_PACKAGES += \
     libstagefrighthw
 
 # Memory
+PRODUCT_PACKAGES += \
+    android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service
+
 $(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-dalvik-heap.mk)
 $(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-hwui-memory.mk)
 
@@ -215,7 +253,9 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    power.msm8992
+    power.msm8992 \
+    android.hardware.power@1.0-impl \
+    android.hardware.power@1.0-service
 
 # Radio
 PRODUCT_COPY_FILES += \
@@ -243,12 +283,23 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensor_def_qcomdev.conf:system/etc/sensors/sensor_def_qcomdev.conf \
     $(LOCAL_PATH)/configs/sensorhub-blacklist.txt:system/etc/firmware/sensorhub-blacklist.txt
 
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl \
+    android.hardware.sensors@1.0-service
+
 # Thermal
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermanager.xml:system/etc/thermanager.xml
 
 PRODUCT_PACKAGES += \
-    thermanager
+    thermanager \
+    android.hardware.thermal@1.0-impl \
+    android.hardware.thermal@1.0-service
+
+#Vibrator
+PRODUCT_PACKAGES += \
+    android.hardware.vibrator@1.0-impl \
+    android.hardware.vibrator@1.0-service
 
 # Wifi
 PRODUCT_COPY_FILES += \
@@ -265,38 +316,7 @@ PRODUCT_PACKAGES += \
     wpa_supplicant \
     wpa_supplicant.conf
 
+#USB
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator@2.0-impl \
-    android.hardware.graphics.allocator@2.0-service \
-    android.hardware.graphics.mapper@2.0-impl \
-    android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service \
-    android.hardware.renderscript@1.0-impl \
-    android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service \
-    android.hardware.audio@2.0-impl \
-    android.hardware.audio@2.0-service \
-    android.hardware.audio.effect@2.0-impl \
-    android.hardware.soundtrigger@2.0-impl \
-    android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.composer@2.1-service \
-    android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service \
-    keystore.msm8992.so \
-    android.hardware.vibrator@1.0-impl \
-    android.hardware.vibrator@1.0-service \
-    android.hardware.sensors@1.0-impl \
-    android.hardware.sensors@1.0-service \
-    android.hardware.gatekeeper@1.0-impl \
-    android.hardware.gatekeeper@1.0-service \
-    gatekeeper.msm8992.so \
-    android.hardware.power@1.0-impl \
-    android.hardware.power@1.0-service \
-    android.hardware.thermal@1.0-impl \
-    android.hardware.thermal@1.0-service \
-    android.hardware.gnss@1.0-impl \
-    android.hardware.gnss@1.0-service \
     android.hardware.usb@1.0-service
 
-PRODUCT_COPY_FILES += \
-    device/motorola/clark/configs/manifest.xml:system/vendor/manifest.xml
