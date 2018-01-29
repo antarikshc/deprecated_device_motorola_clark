@@ -590,6 +590,8 @@ lib/libqmimotext.so
 lib64/libqmimotext.so
 lib64/libadropbox.so
 vendor/qcril.db
+vendor/lib/lib-imscamera.so
+vendor/lib64/lib-imscamera.so
 vendor/lib/liblqe.so
 vendor/lib64/liblqe.so
 vendor/lib/libmdmdetect.so
