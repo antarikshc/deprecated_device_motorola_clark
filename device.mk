@@ -68,6 +68,7 @@ PRODUCT_PACKAGES += \
     libmmcamera_interface \
     libmmjpeg_interface \
     libshims_camera \
+    libshim_ims_camera \
     mm-qcamera-app \
     Snap
 
