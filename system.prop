@@ -44,7 +44,8 @@ ro.qualcomm.cabl=0
 
 # Camera
 camera.aux.packagelist=org.codeaurora.snapcam,org.cyanogenmod.snap
-persist.camera.HAL3.enabled=1
+persist.camera.HAL3.enabled=0
+camera2.portability.force_api=1
 camera.disable_zsl_mode=1
 persist.camera.zsl.mode=0
 persist.camera.tnr.video=on
