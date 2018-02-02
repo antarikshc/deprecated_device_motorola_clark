@@ -26,6 +26,7 @@
 #define LOG_TAG "CameraWrapper"
 #include <cutils/log.h>
 #include <cutils/native_handle.h>
+#include <cutils/properties.h>
 #include <utils/threads.h>
 #include <utils/String8.h>
 #include <sensor/SensorManager.h>
@@ -34,6 +35,9 @@
 #include <camera/Camera.h>
 #include <camera/CameraParameters.h>
 #include <media/hardware/HardwareAPI.h> // For VideoNativeHandleMetadata
+
+#define BACK_CAMERA     0
+#define FRONT_CAMERA    1
 
 #define OPEN_RETRIES    10
 #define OPEN_RETRY_MSEC 40
