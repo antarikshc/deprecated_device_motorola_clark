@@ -66,6 +66,7 @@ PRODUCT_PACKAGES += \
     camera.device@3.2-impl \
     libshims_camera \
     libshim_camera_hal \
+    libshim_atomic \
     camera.msm8992 \
     Snap
 

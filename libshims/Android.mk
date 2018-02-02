@@ -50,6 +50,12 @@ LOCAL_MODULE := libshim_camera_hal
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
 
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := atomic.cpp
+LOCAL_MODULE := libshim_atomic
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+include $(BUILD_SHARED_LIBRARY)
+
 # GPS
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := get_process_name.c
