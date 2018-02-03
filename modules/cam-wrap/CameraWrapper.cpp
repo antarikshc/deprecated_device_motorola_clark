@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The LineageOS Project
+ * Copyright (C) 2018, The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@
 #define LOG_TAG "CameraWrapper"
 #include <cutils/log.h>
 #include <cutils/native_handle.h>
-#include <cutils/properties.h>
 #include <utils/threads.h>
 #include <utils/String8.h>
 #include <sensor/SensorManager.h>
@@ -35,12 +34,6 @@
 #include <camera/Camera.h>
 #include <camera/CameraParameters.h>
 #include <media/hardware/HardwareAPI.h> // For VideoNativeHandleMetadata
-
-#define BACK_CAMERA     0
-#define FRONT_CAMERA    1
-
-#define OPEN_RETRIES    10
-#define OPEN_RETRY_MSEC 40
 
 using namespace android;
 
@@ -68,8 +61,8 @@ camera_module_t HAL_MODULE_INFO_SYM = {
         .module_api_version = CAMERA_MODULE_API_VERSION_1_0,
         .hal_api_version = HARDWARE_HAL_API_VERSION,
         .id = CAMERA_HARDWARE_MODULE_ID,
-        .name = "Moto Camera Wrapper",
-        .author = "Oreo for clark - Antariksh",
+        .name = "Clark Camera Wrapper",
+        .author = "Oreo-Clark by Antariksh",
         .methods = &camera_module_methods,
         .dso = NULL, /* remove compilation warnings */
         .reserved = {0}, /* remove compilation warnings */
@@ -87,7 +80,6 @@ camera_module_t HAL_MODULE_INFO_SYM = {
 typedef struct wrapper_camera_device {
     camera_device_t base;
     int id;
-    int camera_released;
     camera_device_t *vendor;
 } wrapper_camera_device_t;
 
@@ -403,18 +395,13 @@ static int camera_send_command(struct camera_device *device,
 
 static void camera_release(struct camera_device *device)
 {
-    wrapper_camera_device_t* wrapper_dev = NULL;
-  
     if (!device)
         return;
-  
-    wrapper_dev = (wrapper_camera_device_t*) device;
 
     ALOGV("%s->%08X->%08X", __FUNCTION__, (uintptr_t)device,
-            (uintptr_t)(wrapper_dev->vendor));
+            (uintptr_t)(((wrapper_camera_device_t*)device)->vendor));
 
     VENDOR_CALL(device, release);
-    wrapper_dev->camera_released = true;
 }
 
 static int camera_dump(struct camera_device *device, int fd)
@@ -445,13 +432,6 @@ static int camera_device_close(hw_device_t *device)
     }
 
     wrapper_dev = (wrapper_camera_device_t*) device;
-  
-   if (!wrapper_dev->camera_released) {
-     ALOGI("%s: releasing camera device with id %d", __FUNCTION__,
-           wrapper_dev->id);
-     VENDOR_CALL(wrapper_dev, release);
-     wrapper_dev->camera_released = true;
-   }
 
     wrapper_dev->vendor->common.close((hw_device_t*)wrapper_dev->vendor);
     if (wrapper_dev->base.ops)
@@ -514,20 +494,11 @@ static int camera_device_open(const hw_module_t *module, const char *name,
             goto fail;
         }
         memset(camera_device, 0, sizeof(*camera_device));
-        camera_device->camera_released = false;
         camera_device->id = cameraid;
 
-        int retries = OPEN_RETRIES;
-        bool retry;
-        do {
-            rv = gVendorModule->common.methods->open(
-                    (const hw_module_t*)gVendorModule, name,
-                    (hw_device_t**)&(camera_device->vendor));
-            retry = --retries > 0 && rv;
-            if (retry)
-                usleep(OPEN_RETRY_MSEC * 1000);
-        } while (retry);
-      
+        rv = gVendorModule->common.methods->open(
+                (const hw_module_t*)gVendorModule, name,
+                (hw_device_t**)&(camera_device->vendor));
         if (rv) {
             ALOGE("vendor camera open fail");
             goto fail;
